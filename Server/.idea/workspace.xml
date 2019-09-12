@@ -46,6 +46,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Documents/GitHub/HydraProtocol/Server" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -112,7 +113,7 @@
       <workItem from="1568125316123" duration="4354000" />
       <workItem from="1568140647191" duration="1199000" />
       <workItem from="1568209240426" duration="20665000" />
-      <workItem from="1568297063963" duration="7306000" />
+      <workItem from="1568297063963" duration="7958000" />
     </task>
     <servers />
   </component>
