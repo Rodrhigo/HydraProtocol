@@ -10,5 +10,20 @@ class Param {
     const SQL_PORT = 3036;
 
     /** @var string Code Characters */
-    const URL_CHARACTERS = "abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890-";
+    const HASHID_CHARACTERS = "abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890-";
+    const HASHID_PACKETSALT = "";//Put your Random words
+    private $x = "test hello";
+
+    //static $HASHID_HEAD = new Hashids\Hashids('salto url estaTica 123wiii', 3, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-');
+
+    function __contruct() {
+
+    }
 }
+
+$Serialize = new Param();
+$x = serialize($Serialize);
+file_put_contents('test', $x);
+
+echo 2;
+exit;
