@@ -1,4 +1,4 @@
-*.php linguist-detectable=true
-*.cs linguist-detectable=true
-*.html linguist-detectable=false
-*.js linguist-detectable=false
+*.php linguist-detectable=php
+*.cs linguist-detectable=c#
+*.html linguist-detectable=html
+*.js linguist-detectable=js
