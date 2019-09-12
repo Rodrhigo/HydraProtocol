@@ -49,7 +49,10 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\ss" />
+      <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\" />
       <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\Server" />
+      <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\sss" />
       <recent name="C:\Users\Rodrhigo\PhpstormProjects\HydraProtocol\Inc" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -73,7 +76,7 @@
     <configuration name="Block.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/HydraProtocol/Protocol/Block.php" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$USER_HOME$/Documents/GitHub/HydraProtocol/Server/HydraProtocol/index.php">
+    <configuration name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$USER_HOME$/Documents/GitHub/HydraProtocol/Server/index.php">
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -109,7 +112,7 @@
       <workItem from="1568125316123" duration="4354000" />
       <workItem from="1568140647191" duration="1199000" />
       <workItem from="1568209240426" duration="20665000" />
-      <workItem from="1568297063963" duration="2362000" />
+      <workItem from="1568297063963" duration="2785000" />
     </task>
     <servers />
   </component>
