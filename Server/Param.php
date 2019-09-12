@@ -9,5 +9,6 @@ class Param {
     const SQL_HOST = "127.0.0.1";
     const SQL_PORT = 3036;
 
+    /** @var string Code Characters */
     const URL_CHARACTERS = "abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890-";
 }
