@@ -1,5 +1,6 @@
 <?php
-//include_once 'Inc/Functions.php';
+include_once 'Param.php';
+include_once 'Inc/Functions.php';
 //include_once 'Protocol/HydraProtocol.php';
 
 $x = "761232131231266666a";
