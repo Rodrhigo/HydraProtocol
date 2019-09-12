@@ -25,5 +25,5 @@ $Serialize = new Param();
 $x = serialize($Serialize);
 file_put_contents('test', $x);
 
-echo 2;
+echo 234;
 exit;
