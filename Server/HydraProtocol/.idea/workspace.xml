@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="98d0c642-2ebd-4837-8eef-716fb3804152" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/phpecc/examples/creating_signature.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpecc/examples/creating_signature.php" afterDir="false" />
-    </list>
+    <list default="true" id="98d0c642-2ebd-4837-8eef-716fb3804152" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,17 +43,18 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Templates/simple" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/GitHub/HydraProtocol/Server" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.PHP" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\Server" />
+      <recent name="C:\Users\Rodrhigo\PhpstormProjects\HydraProtocol\Inc" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Rodrhigo\PhpstormProjects\HydraProtocol\Templates\simple" />
       <recent name="C:\Users\Rodrhigo\PhpstormProjects" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Rodrhigo\PhpstormProjects\HydraProtocol\Inc" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -74,7 +73,7 @@
     <configuration name="Block.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/HydraProtocol/Protocol/Block.php" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/index.php">
+    <configuration name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$USER_HOME$/Documents/GitHub/HydraProtocol/Server/HydraProtocol/index.php">
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -110,7 +109,7 @@
       <workItem from="1568125316123" duration="4354000" />
       <workItem from="1568140647191" duration="1199000" />
       <workItem from="1568209240426" duration="20665000" />
-      <workItem from="1568297063963" duration="2014000" />
+      <workItem from="1568297063963" duration="2362000" />
     </task>
     <servers />
   </component>

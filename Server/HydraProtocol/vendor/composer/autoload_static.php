@@ -20,11 +20,11 @@ class ComposerStaticInit062d5926127b1926af919f75716152af
     public static $prefixDirsPsr4 = array (
         'Mdanter\\Ecc\\' => 
         array (
-            0 => __DIR__ . '/..' . '/mdanter/ecc/src',
+            0 => __DIR__ . '/..',
         ),
         'FG\\' => 
         array (
-            0 => __DIR__ . '/..' . '/fgrosse/phpasn1/lib',
+            0 => __DIR__ . '/..',
         ),
     );
 
