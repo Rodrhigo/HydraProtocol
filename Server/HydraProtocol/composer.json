@@ -1,0 +1,6 @@
+{
+    "require": {
+        "mdanter/ecc": "^0.5.2",
+      "ext-sockets": "*"
+    }
+}
