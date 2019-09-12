@@ -11,6 +11,10 @@ class ComposerStaticInit062d5926127b1926af919f75716152af
         array (
             'Mdanter\\Ecc\\' => 12,
         ),
+        'H' => 
+        array (
+            'Hashids\\' => 8,
+        ),
         'F' => 
         array (
             'FG\\' => 3,
@@ -20,11 +24,15 @@ class ComposerStaticInit062d5926127b1926af919f75716152af
     public static $prefixDirsPsr4 = array (
         'Mdanter\\Ecc\\' => 
         array (
-            0 => __DIR__ . '/vendor',
+            0 => __DIR__ . '/..' . '/mdanter/ecc/src',
+        ),
+        'Hashids\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hashids/hashids/src',
         ),
         'FG\\' => 
         array (
-            0 => __DIR__ . '/vendor',
+            0 => __DIR__ . '/..' . '/fgrosse/phpasn1/lib',
         ),
     );
 

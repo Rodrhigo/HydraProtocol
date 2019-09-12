@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="98d0c642-2ebd-4837-8eef-716fb3804152" name="Default Changelist" comment="" />
+    <list default="true" id="98d0c642-2ebd-4837-8eef-716fb3804152" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/setup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/HydraProtocol.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HydraProtocol.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Param.php" beforeDir="false" afterPath="$PROJECT_DIR$/Cfg.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids" beforeDir="false" afterPath="$PROJECT_DIR$/hashids" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/.styleci.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/phpunit.xml.dist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/src/Hashids.php" beforeDir="false" afterPath="$PROJECT_DIR$/hashids/Hashids.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/src/HashidsException.php" beforeDir="false" afterPath="$PROJECT_DIR$/hashids/HashidsException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/src/HashidsInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/hashids/HashidsInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/src/Math/Bc.php" beforeDir="false" afterPath="$PROJECT_DIR$/hashids/Math/Bc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/src/Math/Gmp.php" beforeDir="false" afterPath="$PROJECT_DIR$/hashids/Math/Gmp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/src/Math/MathInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/hashids/Math/MathInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/tests/HashidsTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hashids/tests/MathInterfaceTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,10 +69,13 @@
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/fgrosse/phpasn1" />
       <path value="$PROJECT_DIR$/vendor/mdanter/ecc" />
+      <path value="$PROJECT_DIR$/vendor/hashids/hashids" />
     </include_path>
   </component>
   <component name="ProjectId" id="1QIirKIZSbyhCoWzRhxuOiVsYF7" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -48,16 +83,16 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Rodrhigo\PhpstormProjects\HydraProtocol\Templates\simple" />
+      <recent name="C:\Users\Rodrhigo\PhpstormProjects" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\Server\hashids" />
       <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\" />
       <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\ss" />
       <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\Server" />
       <recent name="C:\Users\Rodrhigo\Documents\GitHub\HydraProtocol\sss" />
-      <recent name="C:\Users\Rodrhigo\PhpstormProjects\HydraProtocol\Inc" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Rodrhigo\PhpstormProjects\HydraProtocol\Templates\simple" />
-      <recent name="C:\Users\Rodrhigo\PhpstormProjects" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -116,7 +151,7 @@
       <workItem from="1568309590519" duration="46000" />
       <workItem from="1568309649633" duration="34000" />
       <workItem from="1568309696571" duration="99000" />
-      <workItem from="1568309807653" duration="1838000" />
+      <workItem from="1568309807653" duration="6945000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1568311031526</created>
@@ -146,7 +181,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568311226820</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary=".">
+      <created>1568311760956</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1568311760956</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +209,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>

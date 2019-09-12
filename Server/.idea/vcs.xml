@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$/hashids" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/hashids2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/phpecc" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/phpecc/tests/import/wycheproof" vcs="Git" />
   </component>

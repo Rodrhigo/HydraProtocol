@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Mdanter\\Ecc\\' => array($vendorDir . '/mdanter/ecc/src'),
+    'Hashids\\' => array($vendorDir . '/hashids/hashids/src'),
     'FG\\' => array($vendorDir . '/fgrosse/phpasn1/lib'),
 );
