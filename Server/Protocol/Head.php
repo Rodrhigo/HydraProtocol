@@ -72,5 +72,8 @@ class Head extends GenericNode {
         return $Query->num_rows;
     }
 
+    public static function NewStatic(Dynamic $Dynamic){
+        $Sql = "insert into ";
+    }
 
 }
