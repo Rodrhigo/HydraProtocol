@@ -19,17 +19,23 @@ class Cfg {
     /** @var string Put your Random words need be != HASHID_HEADSALT, JUST SET ONE TIME(for collision) */
     const HASHID_PACKETSALT = "";
 
+    /** @var Hashids */
     private static $Hashid_Head;
+    /** @var Hashids */
     public static $Hashid_Packet;
 
     public static function Init() {
-        Cfg::$HASHID_HEAD = new Hashids(Cfg::HASHID_PACKETSALT, 4/*<=3 Reserved*/, Cfg::HASHID_CHARACTERS);
         if (strlen(HASHID_HEADSALT) < 10) self::EchoExit("HASHID_HEADSALT");
         if (strlen(self::HASHID_PACKETSALT) < 10) self::EchoExit("HASHID_PACKETSALT");
+        if (substr_count(HASHID_CHARACTERS, '"') + substr_count(HASHID_CHARACTERS, "'") > 0) self::EchoExit("HASHID_CHARACTERS");
+
+        Cfg::$Hashid_Head = new Hashids(Cfg::HASHID_HEADSALT, 4/*<=3 Reserved*/, Cfg::HASHID_CHARACTERS);
+        Cfg::$Hashid_Packet = new Hashids(Cfg::HASHID_PACKETSALT, 4, Cfg::HASHID_CHARACTERS);
     }
 
     public static function EchoExit($ConstOrField) {
         echo "Check/Set  $ConstOrField in Cfg.php";
+        exit;
     }
 
     public static function GetHashidForHead() {
@@ -39,6 +45,7 @@ class Cfg {
     public static function GetHashidForPacket() {
         return self::$Hashid_Packet;
     }
+
 
 }
 

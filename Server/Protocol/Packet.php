@@ -25,6 +25,16 @@ class Packet extends GenericNode {
         if (!is_array($this->Options)) $this->Options = Array($this->Options);
     }
 
+    public static function NewPacketWithoutCode($Pbk, $Name, array $Options = array(), $Heads = null, $Message = null) {
+        SQL::Query("ALTER TABLE packet auto_increment = 1");//Prevent big Jump on massive inserts
+        SQL::Query("insert into packet(name,message,options) values('" . SQL::Escape($Name) . "','" . SQL::Escape($Message) . "','" . SQL::Escape(json_encode($Options)) . "')");
+        $InsertID = SQL::LastInsertID();
+        $Code = Cfg::GetHashidForPacket()->encode($InsertID);
+        SQL::Query("update packet set code='$Code' where id='$InsertID'");
+        return new Packet($Pbk, null, null);
+    }
+
+
     public function Update($Name = null, $Msg = null, $Options = null, $AddRemove = Array('Remove' => Array(), 'Add' => Array()), $Sync = null) {
         if (!$this->IsOwner()) return false;
         //SQL::AutoCommit(false);
@@ -100,12 +110,14 @@ class Packet extends GenericNode {
         $Query = SQL::Query("select pp.mirror_code, creation_date, ip, du.static_code, server, dynamic_host, dynamic_subdomain, " .
             "dynamic_path, fname_original, fname_upload, pass_auto, pass_manual, fsize, fhash, fhash_centaur " .
             "from packet_pointer pp, dynamic_url du where " .
-            "packet_code='" . EscapeCode($this->GetCode()) . "' and du.static_code=pp.static_code and pbk='" . $this->GetEscapePbk() . "'");
+            "packet_code='" . EscapeCode($this->GetCode()) . "' and du.static_code=pp.static_code and pbk='" . $this->GetEscapePbk() . "'"
+        );
         while ($Row = $Query->fetch_assoc()) {
-            $Heads[$Row->Code] = new Head($this->GetPbk(), $Row->Code, $this->GetCode(), $this->mirror_code,$Row->dynamic_host, $Row->dynamic_subdomain,
+            $Heads[$Row->Code] = new Head($this->GetPbk(), $Row->Code, $this->GetCode(), $this->mirror_code, $Row->dynamic_host, $Row->dynamic_subdomain,
                 $Row->dynamic_path,
                 $Row->fname_upload, $Row->fname_original, $Row->fsize, $Row->pass_auto,
-                $Row->pass_manual, $Row->fhash, $Row->fhash_centaur);
+                $Row->pass_manual, $Row->fhash, $Row->fhash_centaur
+            );
         }
         return ($this->Heads = $Heads);
     }

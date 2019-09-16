@@ -23,8 +23,8 @@ class Head extends GenericNode {
     private $fHash;
     private $fHashCentaur;
 
-    public function __construct($PbkUnique, $Code, $PacketCode, $MirrorCode, $DynamicHost, $DynamicSubdomain, $DynamicPath, $UpName, $OriginalName,
-                                $fSize, $AutoPass, $ManualPass, $fHash, $fCentaurHash) {
+    public function __construct($PbkUnique, $Code, $PacketCode = null, $Dynamic = null, $MirrorCode = null /*$DynamicHost, $DynamicSubdomain, $DynamicPath, $UpName,
+ $OriginalName, $fSize, $AutoPass, $ManualPass, $fHash, $fCentaurHash*/) {
         parent::__construct($PbkUnique, $Code, $UpName, NodeType::Head, $AutoPass, $ManualPass);
         $this->PacketCode = $PacketCode;
         $this->OriginalName = $OriginalName;
@@ -37,12 +37,26 @@ class Head extends GenericNode {
         $this->MirrorCode = $MirrorCode;
     }
 
+    public function NewHeadWithoutCode($Pbk, $Name, $Dynamic, $PacketCode = null, $MirrorID = null, $Message = null) {
+        SQL::Query("ALTER TABLE static_url auto_increment = 1");//Prevent big Jump on massive inserts
+        SQL::Query("insert into static_url(name,message) values('" . SQL::Escape($Name) . "','" . SQL::Escape($Message) . "')");
+        $InsertID = SQL::LastInsertID();
+        $Code = Cfg::GetHashidForPacket()->encode($InsertID);
+        SQL::Query("update static_url set code='$Code' where id='$InsertID'");
+        //$Packet->Update('add')
+        return new Head($Pbk, $Code, $PacketCode, $Dynamic, $MirrorID);
+    }
+
     public static function NewHeadByCode($PbkUnique, string $Code, $PacketCode) {
         new Head($PbkUnique, $Code, null);
     }
 
     public static function NewHeadByHeadArray($PbkUnique, $HeadArray) {
         return new Head(['code'] ?? null, $HeadArray['options'] ?? null, $HeadArray['upname'] ?? null, CascadeType::Head);
+    }
+
+    public function GetMirrors() {
+
     }
 
     public function AddDynamic(Dynamic $Dynamic) {
@@ -68,11 +82,11 @@ class Head extends GenericNode {
         if ($Message != null) $Set[] = "message='" . SQL::Escape($Message) . "'";
         if (count($Set) == 0) return true;
 
-        $Query = SQL::Query("update dynamic_url set " . join(',', $Set) . " where id=(select id from dynamic_url where pbk='" . $this->GetEscapePbk() . "' and static_code='".(EscapeCode($this->GetCode()))."' order by id desc limit 1)");
+        $Query = SQL::Query("update dynamic_url set " . join(',', $Set) . " where id=(select id from dynamic_url where pbk='" . $this->GetEscapePbk() . "' and static_code='" . (EscapeCode($this->GetCode())) . "' order by id desc limit 1)");
         return $Query->num_rows;
     }
 
-    public static function NewStatic(Dynamic $Dynamic){
+    public static function NewStatic(Dynamic $Dynamic) {
         $Sql = "insert into ";
     }
 

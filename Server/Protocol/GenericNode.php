@@ -40,7 +40,18 @@ abstract class GenericNode {
         Sql::Query("update " . ($this->Type == NodeType::Packet ? "packet" : "url_dynamic") . " set " . ($Name !== null ? "name='" .
                 Sql::Escape($Name) . "'" : "")
             . ($Password !== null ? "password='" . Sql::Escape($Password) . "'" : "")
-            . ($Message !== null ? "message='" . Sql::Escape($Message) . "'" : ""));
+            . ($Message !== null ? "message='" . Sql::Escape($Message) . "'" : "")
+        );
+    }
+
+    public function HashidEncode($ID) {
+        $HashID = type == NodeType::Head ? Cfg::GetHashidForHead() : Cfg::GetHashidForPacket();
+        return $HashID->encode($ID);
+    }
+
+    public function HashidDecode($Code) {
+        $HashID = type == NodeType::Head ? Cfg::GetHashidForHead() : Cfg::GetHashidForPacket();
+        return Cfg::GetHashidForPacket()->decode($Code);
     }
 
     /**

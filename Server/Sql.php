@@ -21,6 +21,10 @@ class Sql {
         return mysqli_affected_rows(self::$Mysqli);
     }
 
+    public static function LastInsertID() {
+        return self::$Mysqli->insert_id;
+    }
+
     public static function AutoCommit(bool $AutoCommit) {
         self::$Mysqli->autocommit($AutoCommit);
     }
