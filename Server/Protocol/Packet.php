@@ -3,26 +3,17 @@ include_once 'Inc/Functions.php';
 include_once 'Protocol/GenericNode.php';
 
 class Packet extends GenericNode {
-    public $Mode;
     private $Heads;
     /** @var array Options */
     private $Options = null;
-    public $Add;
-    public $Remove;
-    public $Sync;
 
     /** @var array My Heads */
 
 
-    public function __construct(string $PbkPEM, string $ID, $PacketArray) {
-        parent::__construct($PbkPEM, $ID, $PacketArray['options'] ?? null, $PacketArray['name'] ?? null, CascadeType::Packet);
+    public function __construct(string $Code/*string $PbkPEM, */) {
+        parent::__construct(/*$PbkPEM,*/ $Code, $PacketArray['options'] ?? null, $PacketArray['name'] ?? null, CascadeType::Packet);
 
-        $this->Add = NewArray($PacketArray['add'] ?? null);
-        $this->Remove = NewArray($PacketArray['remove'] ?? null);
-        $this->Sync = NewArray($PacketArray['sync'] ?? null);
-        $this->Mode = in_array($PacketArray['mode'] ?? null, Array(PacketMode::NoChildUpdate, PacketMode::AddRemove, PacketMode::Sync)) ? $PacketArray['mode'] : PacketMode::NoChildUpdate;
-        $this->Options = $PacketArray['options'] ?? Array();
-        if (!is_array($this->Options)) $this->Options = Array($this->Options);
+
     }
 
     public static function NewPacketWithoutCode($Pbk, $Name, array $Options = array(), $Heads = null, $Message = null) {
@@ -92,15 +83,12 @@ class Packet extends GenericNode {
     /**
      * string[]
      */
-    public function GetOptions() {
-        if (!$this->IsOwner()) return null;
-        if ($this->Options === null) {
-            $Options = Array();
-            $Query = SQL::Query("select options from packet where packet_code='" . $this->Escape($this->GetCode()) . "' limit 1");
-            if ($Query->num_rows == 1) $Options = json_decode($Query->fetch_assoc()->options);
-            $this->Options = $Options;
-        }
-        return $this->Options;
+    public static function GetOptions($Code) {
+        //if (!$this->IsOwner()) return null;
+        $Options = Array();
+        $Query = SQL::Query("select options from packet where packet_code='" . EscapeCode($Code) . "' limit 1");
+        if ($Query->num_rows == 1) $Options = json_decode($Query->fetch_assoc()->options);
+        return $Options;
     }
 
     public function GetHeads() {

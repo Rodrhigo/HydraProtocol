@@ -1,12 +1,34 @@
 <?php
 include_once 'Cfg.php';
 include_once 'Inc/Functions.php';
-//include_once 'Protocol/HydraProtocol.php';
+
+/*include_once 'phpecc/src/Serializer/PublicKey/Der/Formatter.php';
+include_once 'phpecc/src/Math/GmpMathInterface.php';
+include_once 'phpecc/src/Math/GmpMath.php';
+include_once 'phpecc/src/Math/MathAdapterFactory.php';*/
+
+include_once 'Protocol/SocketServer.php';
 
 $x = "761232131231266666";
 
+//$Hydra = new SocketServer();
+/*$Str = '§ECDSA-256-SHA256-Curve:Secp256k1
+§MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEF46Zt5Hi19cEMbTnh0COsy8iHSyki1g6KqJHBxgoO473LmVBR8peCb9tiLc13ARte1CoNzi7aVS8TLuaNkQ7Mg==
+cascade: {"Head.#RefNewHeadID1":{"Dynamic":{"fSize":100000000,"OriginalName":"Gantz Osaka.part1.rar","Host":"mega.co.nz","Path":"/asd123","Name":"G4ntZ 0s4ka.part1.rar"},"MirrorCode":"Mirror111"},"Head.#RefNewHeadID2":{"Dynamic":{"fSize":1000000,"OriginalName":"Gantz Osaka.part1.rar","RefHash":"","Host":"1fichier.com","Path":"/helloworld","Name":"G4ntZ 0s4ka.part1.rar"},"MirrorCode":"Mirror111"},"Head.#RefNewHeadID3":{"Dynamic":{"fSize":100000000,"OriginalName":"Gantz Osaka.part2.rar","Host":"mega.co.nz","Path":"/Wsa123","Name":"G4ntZ 0s4ka.part2.rar"},"MirrorCode":"Mirror222"},"Head.#RefNewPacketID123":{"Sync":["#RefNewHeadID1","#RefNewHeadID2","#RefNewHeadID3"],"Mode":"Sync","Options":{"captcha":true}}}
+MEUCID+XdOk5oj/sTuVMzEVcJH20Gz+k5DNobKwOlAM4pErQAiEA0a+n/c1fLm/HqS0YZUtz4CvUkj156t6gKnijxeNELwA=';
+$Matches = null;
+$Blocks = Array();
+preg_match_all("@^(?<HydraBlock>§Hydra(?<ContentHydra>.*?)Hydra§(?=\n§|$))|" . "(?<Header>§(?<LeftHeader>[a-zA-Z0-9\-:|]+)§(?<Pbk>[a-zA-Z0-9+/=]+))\n" . "(?:(?<ContentBlock>.*?)\n|)" . "(?<Signature>[a-zA-Z0-9+/=]+?)(?=\n§|$)@si", $Str, $Matches, PREG_SET_ORDER);
+if (count($Matches) == 0 || substr($Str, 0, strlen($Matches[0][0])) != $Matches[0][0]) echo -1;//Formato Invalido//return $this->ServerResponse
+else echo 1;
+exit;*/
+
+//($Hydra, $Blocks);
+
+
+SwitchServerStatus(true);
+
 exit;
-$Hydra = new HydraProtocol();
 /*AddNode: Agrega un Nodo, Sync: Sincroniza/setea el paquete con los nodos enviados, RemoveNode: Elimina un nodo*/
 $Json = Array();
 $Json['PaCket.#MyRefID-1'] = Array('Type' => 'Packet', "Name" => "Marvel Packet", 'Mode' => 'AddRemove', 'Add' => Array('StaticUrlID-1', 'StaticUrlID-2'), 'Remove' => Array('StaticIDHello', 'StaticIDWorld'));
@@ -45,7 +67,7 @@ $Blocks = $Hydra->DecodeBlocks($ReceivedBlocks);
 print_r($Blocks);
 
 
-exit;
+//exit;
 error_reporting(E_ALL ^ E_NOTICE);
 //echo "Hello Worlddd";exit;
 set_time_limit(60 * 3/**/);

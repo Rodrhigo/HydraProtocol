@@ -1,6 +1,5 @@
 <?php
-
-use Param;
+include_once ROOT . "/Protocol/SocketServer.php";
 
 function KeyToLower($Array, $Deep = 1) {
     $NewArray = $Deep == 1 ? Array() : $Array;
@@ -36,4 +35,19 @@ function JustAZ($String, $ToLower = false, $Zero9 = false) {
     $Matches = null;
     preg_match('/[a-z' . ($Zero9 ? '0-9' : '') . ']/', $String, $Matches);
     return $Matches;
+}
+
+function SwitchServerStatus($ServerON) {
+    if ($ServerON === true) {
+        $Server = new SocketServer();//apc_store
+        $Server->Listener();
+    } elseif ($ServerON === false) {
+
+    }
+}
+
+function ArrayFormat($Array, $Format = '%1$s', $JoinGlue = "", $EscapeRequired = false) {
+    $Str = array();
+    foreach ($Array as $Key => $Value) $Str[] = sprintf($Format, $EscapeRequired ? SQL::Escape($Value) : $Value, $Key);
+    return join($JoinGlue, $Str);
 }

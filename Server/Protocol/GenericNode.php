@@ -8,6 +8,7 @@ abstract class GenericNode {
 
     private $PassAuto;
     private $PassManual;
+    private $Message;
     /**
      * @var bool if you use # before the Url, $IsNewUrl = true. #RefNewID123
      */
@@ -21,10 +22,11 @@ abstract class GenericNode {
     /**
      * @var int|NodeOrPacketOwner|null
      */
-    private $IsOwner = null;
+    //private $IsOwner = null;
+    private $IsNewID;
 
-    public function __construct($PbkUnique, $Code, $Name, $Type, $PassAuto, $PassManual) {
-        $this->PbkUnique = $PbkUnique;
+    public function __construct($Code, $Name, $Type, $PassAuto, $PassManual) {
+        //$this->PbkUnique = $PbkUnique;
         $this->Code = trim(substr($Code, ($Code . ' ')[0] == '#' ? 1 : 0));
         $this->IsNewID = ($Code . ' ')[0] == '#';
         $this->Name = $Name;
@@ -44,6 +46,12 @@ abstract class GenericNode {
         );
     }
 
+    public function GetMessage() {
+        return $this->Message;
+    }
+
+    public function GetManualPass() { return $this->PassManual; }
+
     public function HashidEncode($ID) {
         $HashID = type == NodeType::Head ? Cfg::GetHashidForHead() : Cfg::GetHashidForPacket();
         return $HashID->encode($ID);
@@ -54,17 +62,15 @@ abstract class GenericNode {
         return Cfg::GetHashidForPacket()->decode($Code);
     }
 
-    /**
-     * @return int|NodeOrPacketOwner
-     */
-    public function IsOwner() {//If Admin, true
+
+    /*public function IsOwner() {//If Admin, true
         if ($this->IsOwner !== null && is_int($this->IsOwner)) return $this->IsOwner;
         $Query = Sql::Query("select pbk from packet where packet_url=''" . $this->Escape($this->ID) . "' limit 1");
         if ($Query->num_rows != 1) return $IsOwner = NodeOrPacketOwner::NoExits;
 
         $Pbk = $Query->fetch_assoc()->pbk;
         if ($this->PbkUnique == $Pbk) return $IsOwner = NodeOrPacketOwner::Owner; else return $IsOwner = NodeOrPacketOwner::NoOwner;
-    }
+    }*/
 
     public function GetPbk() {
         return $this->PbkUnique;

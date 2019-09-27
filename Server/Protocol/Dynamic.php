@@ -15,7 +15,7 @@ class Dynamic {
     private $fHash;
     private $RefHash;
 
-    public function __construct($CreationTime, $SuggestedServerName, $DynamicHost, $DynamicSubdomain, $DynamicPath, $UpName, $OriginalName, $fSize, $AutoPass,
+    public function __construct($SuggestedServerName, $DynamicHost, $DynamicSubdomain, $DynamicPath, $UpName, $OriginalName, $fSize, $AutoPass,
                                 $ManualPass, $fHash, $RefHash) {
         $this->CreationTime = $CreationTime;
         $this->Host = $DynamicHost;

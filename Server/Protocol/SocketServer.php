@@ -18,7 +18,7 @@ class SocketServer {
 
     }
 
-    public function Listener(){
+    public function Listener() {
         set_time_limit(0);
         ob_implicit_flush();
 
@@ -26,7 +26,7 @@ class SocketServer {
             echo "socket_create() falló: razón: " . socket_strerror(socket_last_error()) . "\n";
         }
 
-        if (socket_bind($sock, PARAM::SOCKETSERVERADDRESS, PARAM::SOCKETSERVERPORT) === false) {
+        if (socket_bind($sock, SOCKET_SERVERADDRESS, SOCKET_SERVERPORT) === false) {
             echo "socket_bind() falló: razón: " . socket_strerror(socket_last_error($sock)) . "\n";
         }
 
@@ -42,9 +42,10 @@ class SocketServer {
             $read[] = $sock;
 
             $read = array_merge($read, $clients);
-
+            $write = null;
+            $except = null;
             // Set up a blocking call to socket_select
-            if (socket_select($read, $write = NULL, $except = NULL, $tv_sec = 5) < 1) {
+            if (socket_select($read, $write, $except, $tv_sec = 5) < 1) {
                 //SocketServer::debug("Problem blocking socket_select?");
                 continue;
             }
@@ -59,15 +60,17 @@ class SocketServer {
                 $clients[] = $msgsock;
                 $key = array_keys($clients, $msgsock);
                 /* Enviar instrucciones. */
-                $msg = "\nBienvenido al Servidor De Prueba de PHP. \n" . "Usted es el cliente numero: {$key[0]}\n" . "Para salir, escriba 'quit'. Para cerrar el servidor escriba 'shutdown'.\n";
+                $msg = "\nBienvenido al Servidor De Prueba de PHP. \n" . "Usted es el cliente numero: {$key[0]}\n" . "Para salir, escriba 'quit'. Para cerrar el servidor escriba 'shutdown'.\n\n";
                 socket_write($msgsock, $msg, strlen($msg));
             }
 
             foreach ($clients as $key => $client) { // for each client
                 if (in_array($client, $read)) {
-                    if (false === ($buf = socket_read($client, 2048, PHP_NORMAL_READ))) {
+                    if (false === ($buf = @socket_read($client, 2048))) {
                         echo "socket_read() falló: razón: " . socket_strerror(socket_last_error($client)) . "\n";
-                        break 2;
+                        unset($clients[$key]);
+                        socket_close($client);
+                        //break 2;
                     }
                     if (!$buf = trim($buf)) {
                         continue;
@@ -77,27 +80,31 @@ class SocketServer {
                         socket_close($client);
                         break;
                     }
-                    if ($buf == 'shutdown') {
-                        socket_close($client);
-                        break 2;
-                    }
-                    $talkback = "Cliente {$key}: Usted dijo '$buf'.\n";
-                    socket_write($client, $talkback, strlen($talkback));
+
+                    $Blocks = $this->DecodeBlocks($buf);
+                    $BlocksResp = array();
+                    foreach ($Blocks as $Block) $BlocksResp[] = $Block->ToResponse();
+                    $Response = join("\n", $BlocksResp) . "\n\n";
+                    socket_write($client, $Response, strlen($Response));
+                    //$talkback = "Cliente {$key}: Usted dijo\r\n$buf.\n\n";
+                    //socket_write($client, $talkback, strlen($talkback));
+                    //Block::NewBlockByHeaderContentHash();
+
                     echo "$buf\n";
                 }
             }
         } while (true);
     }
 
-    /*
-      @param string $ReceivedStr
-      @return Block[] Blocks
+    /**
+     * @param $ReceivedBlocks
+     * @return array|block[]|Block
      */
-
     public function DecodeBlocks($ReceivedBlocks) {
         $Matches = null;
         $Blocks = Array();
-        preg_match_all("@^(?<HydraBlock>§Hydra(?<ContentHydra>.*?)Hydra§(?=\n§|$))|" . "(?<Header>§(?<LeftHeader>[a-zA-Z0-9\-:|]+)§(?<Pbk>$this->Base64Regex+))\n" . "(?:(?<ContentBlock>.*?)\n|)" . "(?<Signature>$this->Base64Regex+?)(?=\n§|$)@si", $ReceivedBlocks, $Matches, PREG_SET_ORDER);
+        $Pattern = "@^(?<HydraBlock>§Hydra(?<ContentHydra>.*?)Hydra§(?=\n§|$))|" . "(?<Header>§(?<LeftHeader>[a-zA-Z0-9\-:|]+)§(?<Pbk>$this->Base64Regex+))\n" . "(?:(?<ContentBlock>.*?)\n|)" . "(?<Signature>$this->Base64Regex+?)(?=\n§|$)@si";
+        preg_match_all($Pattern, $ReceivedBlocks, $Matches, PREG_SET_ORDER);
         if (count($Matches) == 0 || substr($ReceivedBlocks, 0, strlen($Matches[0][0])) != $Matches[0][0]) return -1;//Formato Invalido//return $this->ServerResponse($Hydra, $Blocks);
         foreach ($Matches as $BlockMatch) {
             if ($BlockMatch['HydraBlock'] != '') {
@@ -109,6 +116,7 @@ class SocketServer {
             } else {
                 try {
                     $NewBlock = Block::NewBlockByHeaderContentHash($BlockMatch['Header'], $BlockMatch['ContentBlock'], base64_decode($BlockMatch['Signature']));
+
                 } catch (BlockInvalid $InvalidBlock) {
                     $NewBlock = $InvalidBlock;
                 } catch (Exception $Exception) {
@@ -129,7 +137,8 @@ class SocketServer {
         }
     }
 
-    public function ServerResponse($Hydra, $Blocks) {
+    public
+    function ServerResponse($Hydra, $Blocks) {
 
     }
 

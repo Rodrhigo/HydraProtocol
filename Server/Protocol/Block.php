@@ -1,6 +1,5 @@
 <?php
 
-require __DIR__ . "/../vendor/autoload.php";
 include_once 'Crypto/Asymetric/ECDSA.php';
 include_once 'Sql.php';
 
@@ -34,6 +33,10 @@ class Block implements IBlock {
         $this->Asymmetric = $Asymmetric;
         $this->Lines = $Lines;
         $this->ID = $ID;
+    }
+
+    public function GetPbkUnique() {
+        return $this->Asymmetric != null ? $this->Asymmetric->GetPbkUnique() : null;
     }
 
     /**
@@ -92,7 +95,13 @@ class Block implements IBlock {
      * §[Cipher:]ECDSA-256-SHA256-Secp256k1-Format:InsidePem|ExampleCompressAlg:None§Pbk
      * [Cipher:] Optional
      */
-
+    /**
+     * @param $Header
+     * @param $Content
+     * @param $DecodedSignature
+     * @return Block|BlockMalFormatted
+     * @throws BlockInvalid
+     */
     public static function NewBlockByHeaderContentHash($Header, $Content, $DecodedSignature) {
         $LeftRightHeader = explode('§', $Header);
         if (count($LeftRightHeader) != 3 || $LeftRightHeader[0] != '' || $LeftRightHeader[1] == '' || $LeftRightHeader[2] == '') throw new BlockMalFormatted(NewBlockResponse::MalFormatted);
@@ -148,7 +157,6 @@ class Block implements IBlock {
         $ECDSA = ECDSA::NewECDSAByPbk($PbkPEM, $Algorithm, 256, $CipherParams['curve'], $CipherParams['pbkformat']);
         if (!$ECDSA->Verify($Content, $Signature)) throw new BlockInvalid(NewBlockResponse::YouAreNotTheOwner);
 
-
         //'ecdsa', $Pbk, $CipherParams['keysize'], $Algorithm, $NameValueLines, $Signature,
         return new Block($ECDSA, self::ContentToLines($Content), $CipherParams['id'] ?? null);
     }
@@ -180,33 +188,63 @@ class Block implements IBlock {
         }
     }*/
 
+    public function QueryToCodes($Query) {
+        $Codes = array();
+        while ($Row = $Query->fetch_assoc()) {
+            $Codes[] = $Row['code'];
+        }
+        return json_encode($Codes);
+    }
+
     /**
      * @param GenericNode[] $Cascade
      */
-    public function ProcessBlock($Cascade) {
+    private function ProcessBlock(/*$Cascade*/) {
+
         //$Cascade = json_decode($json);
         //$Packets = Array();
         //$Nodes = Array();
-        $GenericNodes = Array();
+        //$GenericNodes = Array();
         //$PacketNode = Array('packet' => &$Packets, 'node' => $Nodes);
-        $Sql = "";
-        $x = "";
-        foreach ($Cascade as $Key => $PacketOrHead) {
+        $Response = array();
+
+        if (isset($this->Lines['listme'])) {
+            $List = array_values(explode('|', strtolower($this->Lines['listme'])));
+            if (isset($List['packets']))
+                $Response['packets'] = $this->QueryToCodes(SQL::Query("Select code from packets where Pbk='" . SQL::Escape($this->GetPbkUnique()) . "'"));
+            if (isset($List['heads']))
+                $Response['heads'] = $this->QueryToCodes(SQL::Query("Select code from static_url where Pbk='" . SQL::Escape($this->GetPbkUnique()) . "'"));
+        }
+
+        if (isset($this->Lines['cascade'])) $Response['cascade'] = json_encode($this->ProcessCascade(json_decode($this->Lines['cascade'])));
+        return ArrayFormat($Response, '%2$s:%1$s', "\n", false);
+
+    }
+
+    /**
+     * @param $Nodes
+     * @return GenericNode[]
+     */
+    private function ProcessCascade($Nodes) {
+        $GenericNodes = array();
+        foreach ($Nodes as $Key => $PacketOrHead) {
             /*if (!isset($PacketOrNode['id'])) continue;
             if (!isset($PacketOrNode['type'])) continue;
             if (array_key_exists($Type, array('node', 'packet'))) continue;*/
             $Split = explode('.', $Key);
-            $Type = $Split[0];
-            $Id = $Split[1];
+            $Type = strtolower($Split[0]);
+            $Code = $Split[1];
 
-            $GenericNodes[$Key] = !$PacketOrHead->IsOwner() ? null : ($Type == CascadeType::Packet ? $this->ProcessPacket
-            (new Packet($this->Asymmetric->GetPbkUnique(), $Id, $PacketOrHead)) : $this->ProcessHead(new Head
-            ($this->Asymmetric->GetPbkUnique(), $Id, $PacketOrHead)));
+            if ($Type == NodeType::Packet) $Node = (new SyncPacket($this->Asymmetric->GetPbkUnique(), $Code, $PacketOrHead))->Process();
+            else $Node = (new SyncHead($this->Asymmetric->GetPbkUnique(), $Code, $PacketOrHead))->Process();
+
+            if ($Node != null) $GenericNodes[$Key] = $Node;
         }
+        return $GenericNodes;
     }
 
     /**
-     * Used in Cascade and Packe
+     * Used in Cascade and Packet
      */
     public function GetUniqueID() {
 
@@ -216,14 +254,10 @@ class Block implements IBlock {
 
     }*/
 
-    public function ProcessPacket(Packet $Packet) {
-        if ($Packet->Mode == PacketMode::Sync) {
+    public function FilterOwnerHeads($Codes) {
 
-        } elseif ($Packet->Mode == PacketMode::AddRemove) {
-
-        }
-        //if(isset($Packets[$Json['id']]))conti
     }
+
 
     public function ProcessHead(Head $Head) {
 

@@ -1,5 +1,14 @@
 <?php
-require "vendor/autoload.php";
+//include_once "vendor/autoload.php";
+/*include_once "phpecc/src/Serializer/PublicKey/PublicKeySerializerInterface.php";
+include_once "phpecc/src/Crypto/Signature/HasherInterface.php";
+include_once "phpecc/src/Crypto/Signature/SignHasher.php";
+include_once "phpecc/src/EccFactory.php";
+include_once "phpecc/src/Crypto/Signature/Signer.php";
+include_once "phpecc/src/Serializer/PublicKey/PemPublicKeySerializer.php";
+include_once "phpecc/src/Serializer/PublicKey/DerPublicKeySerializer.php";
+include_once "phpecc/src/Serializer/Signature/DerSignatureSerializerInterface.php";
+include_once "phpecc/src/Serializer/Signature/DerSignatureSerializer.php";*/
 
 use Mdanter\Ecc\Crypto\Signature\SignHasher;
 use Mdanter\Ecc\EccFactory;

@@ -1,5 +1,5 @@
 <?php
-include_once 'Param.php';
+include_once 'Cfg.php';
 
 class Sql {
     /**
@@ -8,7 +8,7 @@ class Sql {
     private static $Mysqli;
 
     public static function Connect() {
-        if (self::$Mysqli == null) self::$Mysqli = new mysqli(Param::SqlHost, Param::SqlUser, Param::SqlPass, null, Param::SqlPort);
+        if (self::$Mysqli == null) self::$Mysqli = new mysqli(Cfg::SqlHost, Cfg::SqlUser, Cfg::SqlPass, null, Cfg::SqlPort);
         return self::$Mysqli;
     }
 
