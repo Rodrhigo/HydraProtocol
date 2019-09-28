@@ -1,16 +1,17 @@
 <?php
 include_once ROOT . "/Protocol/SocketServer.php";
 
-function KeyToLower($Array, $Deep = 1) {
+function KeyToLower($Array, $Deep = 1/*, $NodeDotCodeMode = false*/) {
     $NewArray = $Deep == 1 ? Array() : $Array;
     if ($Deep != 1) $NewArray = array_change_key_case($NewArray, CASE_LOWER);
     foreach ($Array as $Key => $ChildArray) {
         if ($Deep == 1) {
             $Split = explode('.', $Key, 2);
             if (count($Split) != 2) continue;
-            if (strtolower($Split[0]) == "node" || strtolower($Split[0]) == "packet") $Key = strtolower($Split[0]) . '.' . $Split[1];//PaCkEt.MyID => packet.MyID
+            if (strtolower($Split[0]) == "head" || strtolower($Split[0]) == "packet") $Key = strtolower($Split[0]) . '.' . $Split[1];//PaCkEt.MyID => packet
+            //.MyID
             else continue;
-        }
+        }else $Key = strtolower($Key);
         if (is_array($ChildArray)) $NewArray[$Key] = KeyToLower($ChildArray, $Deep + 1);
     }
     return $NewArray;

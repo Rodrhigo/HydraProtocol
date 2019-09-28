@@ -1,5 +1,5 @@
 <?php
-
+include_once 'Cfg.php';
 include_once 'Inc/Enums.php';
 include_once 'Protocol/BlockInvalid.php';
 include_once 'Protocol/Block.php';
@@ -8,6 +8,10 @@ include_once 'Protocol/BlockHydra.php';
 include_once 'Protocol/GenericNode.php';
 include_once 'Protocol/Packet.php';
 include_once 'Protocol/Head.php';
+include_once 'Protocol/GenericSync.php';
+include_once 'Protocol/SyncHead.php';
+include_once 'Protocol/SyncPacket.php';
+include_once 'Protocol/Dynamic.php';
 
 class SocketServer {
 
@@ -59,8 +63,11 @@ class SocketServer {
                 }
                 $clients[] = $msgsock;
                 $key = array_keys($clients, $msgsock);
+                $IP = null;
+                socket_getpeername($clients[0], $IP);
+
                 /* Enviar instrucciones. */
-                $msg = "\nBienvenido al Servidor De Prueba de PHP. \n" . "Usted es el cliente numero: {$key[0]}\n" . "Para salir, escriba 'quit'. Para cerrar el servidor escriba 'shutdown'.\n\n";
+                $msg = "\nBienvenido al Servidor De Prueba de PHP. \n" . "Usted es el cliente numero: {$key[0]}, su IP es: $IP \n" . "Para salir, escriba 'quit'. Para cerrar el servidor escriba 'shutdown'.\n\n";
                 socket_write($msgsock, $msg, strlen($msg));
             }
 
@@ -81,7 +88,7 @@ class SocketServer {
                         break;
                     }
 
-                    $Blocks = $this->DecodeBlocks($buf);
+                    $Blocks = $this->DecodeBlocks($buf, $IP);
                     $BlocksResp = array();
                     foreach ($Blocks as $Block) $BlocksResp[] = $Block->ToResponse();
                     $Response = join("\n", $BlocksResp) . "\n\n";
@@ -100,7 +107,7 @@ class SocketServer {
      * @param $ReceivedBlocks
      * @return array|block[]|Block
      */
-    public function DecodeBlocks($ReceivedBlocks) {
+    public function DecodeBlocks($ReceivedBlocks, $IP) {
         $Matches = null;
         $Blocks = Array();
         $Pattern = "@^(?<HydraBlock>§Hydra(?<ContentHydra>.*?)Hydra§(?=\n§|$))|" . "(?<Header>§(?<LeftHeader>[a-zA-Z0-9\-:|]+)§(?<Pbk>$this->Base64Regex+))\n" . "(?:(?<ContentBlock>.*?)\n|)" . "(?<Signature>$this->Base64Regex+?)(?=\n§|$)@si";
@@ -116,13 +123,14 @@ class SocketServer {
             } else {
                 try {
                     $NewBlock = Block::NewBlockByHeaderContentHash($BlockMatch['Header'], $BlockMatch['ContentBlock'], base64_decode($BlockMatch['Signature']));
-
+                    $NewBlock->SetIP($IP);
                 } catch (BlockInvalid $InvalidBlock) {
                     $NewBlock = $InvalidBlock;
                 } catch (Exception $Exception) {
                     $NewBlock = new BlockInvalid(NewBlockResponse::UnexpectedErrorInCipher);
                 }
             }
+
             $Blocks[] = $NewBlock;
         }
         return $Blocks;

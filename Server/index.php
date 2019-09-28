@@ -1,13 +1,12 @@
 <?php
 include_once 'Cfg.php';
 include_once 'Inc/Functions.php';
-
+include_once 'Protocol/SocketServer.php';
 /*include_once 'phpecc/src/Serializer/PublicKey/Der/Formatter.php';
 include_once 'phpecc/src/Math/GmpMathInterface.php';
 include_once 'phpecc/src/Math/GmpMath.php';
 include_once 'phpecc/src/Math/MathAdapterFactory.php';*/
 
-include_once 'Protocol/SocketServer.php';
 
 $x = "761232131231266666";
 
@@ -24,21 +23,32 @@ else echo 1;
 exit;*/
 
 //($Hydra, $Blocks);
+$x = array();
 
+//echo isset($x['y']) ? ":=)" : ":(";
+//exit;
 
 SwitchServerStatus(true);
-
 exit;
+
 /*AddNode: Agrega un Nodo, Sync: Sincroniza/setea el paquete con los nodos enviados, RemoveNode: Elimina un nodo*/
 $Json = Array();
-$Json['PaCket.#MyRefID-1'] = Array('Type' => 'Packet', "Name" => "Marvel Packet", 'Mode' => 'AddRemove', 'Add' => Array('StaticUrlID-1', 'StaticUrlID-2'), 'Remove' => Array('StaticIDHello', 'StaticIDWorld'));
-$Json['nOde.#MyRefID-1'] = Array('Type' => 'Node', 'OriginalName' => 'Marvel vs Campcom.rar', 'UpName' => 'M4rv3l v$ C4mpc0m.rar');
+$Json['nOde.#MyRefID-1'] = Array(
+    'Dynamic' => array(
+        'OriginalName' => 'Hello World', 'FHash' => 'hi', 'lowerkey' => 'test'
+    ),
+    'Type' => 'Node', 'OriginalName' => 'Marvel vs Campcom.rar', 'UpName' => 'M4rv3l v$ C4mpc0m.rar');
+/*$Json['PaCket.#MyRefID-1'] = Array('Type' => 'Packet', "Name" => "Marvel Packet", 'Mode' => 'AddRemove', 'Add' => Array('StaticUrlID-1', 'StaticUrlID-2'),
+'Remove' => Array('StaticIDHello', 'StaticIDWorld'));
 $Json['packet.#MyRefID-1'] = Array('Type' => 'Aspx', 'OriginalName' => 'Marvel vs Campcom.rar', 'UpName' => 'M4rv3l v$ C4mpc0m.rar');
 $Json[] = Array('Id' => 'SwQwEr', 'Type' => 'Packet', 'AddNode' => Array(0 => Array('Id' => '-1'), 'UpName' => 'M4rv3l v$ C4mpc0m.rar', 'OriginalName' => 'Marvel vs Campcom.rar'));
 $Json[] = Array('Id' => 'SwQwEr', 'Type' => 'Packet', 'Sync' => Array(0 => Array('Id' => '-1'), 'UpName' => 'M4rv3l v$ C4mpc0m.rar', 'OriginalName' => 'Marvel vs Campcom.rar'));
 $Json[] = Array('Id' => '-1', 'Type' => 'Packet', 'Sync' => Array(0 => Array('Id' => '-1'), 'UpName' => 'M4rv3l v$ C4mpc0m.rar', 'OriginalName' => 'Marvel vs Campcom.rar'));
-
+*/
+$Json = json_decode('[‌{"Head.#RefNewHeadID1":{"Dynamic":{"fSize":100000000,"OriginalName":"Gantz Osaka.part1.rar","Host":"mega.co.nz","Path":"\/asd123","Name":"G4ntZ 0s4ka.part1.rar"},"MirrorCode":"Mirror111"},"Head.#RefNewHeadID2":{"Dynamic":{"fSize":1000000,"OriginalName":"Gantz Osaka.part1.rar","RefHash":"","Host":"1fichier.com","Path":"\/helloworld","Name":"G4ntZ 0s4ka.part1.rar"},"MirrorCode":"Mirror111"},"Head.#RefNewHeadID3":{"Dynamic":{"fSize":100000000,"OriginalName":"Gantz Osaka.part2.rar","Host":"mega.co.nz","Path":"\/Wsa123","Name":"G4ntZ 0s4ka.part2.rar"},"MirrorCode":"Mirror222"},"Packet.#RefNewPacketID123":{"Sync":["#RefNewHeadID1","#RefNewHeadID2","#RefNewHeadID3"],"Mode":"Sync","Options":{"captcha":true}}}]');
 $Json = KeyToLower($Json);
+print_r($Json);
+exit;
 //print_r($Json);
 $JsonEncode = json_encode($Json);
 //Block::ProcessBlockStatic($Json);

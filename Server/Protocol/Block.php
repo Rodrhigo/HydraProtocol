@@ -1,6 +1,9 @@
 <?php
 
 include_once 'Crypto/Asymetric/ECDSA.php';
+include_once 'Protocol/GenericSync.php';
+include_once 'Protocol/SyncHead.php';
+include_once 'Protocol/SyncPacket.php';
 include_once 'Sql.php';
 
 class Block implements IBlock {
@@ -14,7 +17,7 @@ class Block implements IBlock {
      */
     public $Asymmetric;
     protected $Lines;
-
+    private $IP;
     //private function Block($Cipher, $Pbk, $KeySize, $HashAlgorithm, $Lines, $Signature, $ID = null) {
 
     /**
@@ -38,6 +41,8 @@ class Block implements IBlock {
     public function GetPbkUnique() {
         return $this->Asymmetric != null ? $this->Asymmetric->GetPbkUnique() : null;
     }
+
+    public function GetIP() { return $this->IP; }
 
     /**
      * @param $Asymmetric
@@ -129,6 +134,10 @@ class Block implements IBlock {
         }
     }
 
+    public function SetIP($IP) {
+        return $this->IP = SQL::Escape($IP);
+    }
+
     /*
      * 
      */
@@ -173,8 +182,8 @@ class Block implements IBlock {
     }
 
     public function ToResponse() {
-        $Block = "§" . $this->GetCurrentBlockName();
-        $Block .= $this->ProcessBlock();
+        $Block = "§" . $this->GetCurrentBlockName() . "\n";
+        $Block .= $this->ProcessBlock() . "\n";
         return $Block . $this->GetCurrentBlockName() . "§";
     }
 
@@ -216,7 +225,10 @@ class Block implements IBlock {
                 $Response['heads'] = $this->QueryToCodes(SQL::Query("Select code from static_url where Pbk='" . SQL::Escape($this->GetPbkUnique()) . "'"));
         }
 
-        if (isset($this->Lines['cascade'])) $Response['cascade'] = json_encode($this->ProcessCascade(json_decode($this->Lines['cascade'])));
+        if (isset($this->Lines['cascade'])) {
+            $Cascade = json_decode($this->Lines['cascade'], true);//json_decode Default is StdClass.
+            $Response['cascade'] = json_encode($this->ProcessCascade($Cascade));
+        }
         return ArrayFormat($Response, '%2$s:%1$s', "\n", false);
 
     }
@@ -226,6 +238,7 @@ class Block implements IBlock {
      * @return GenericNode[]
      */
     private function ProcessCascade($Nodes) {
+        $Nodes = KeyToLower($Nodes);
         $GenericNodes = array();
         foreach ($Nodes as $Key => $PacketOrHead) {
             /*if (!isset($PacketOrNode['id'])) continue;
@@ -235,8 +248,12 @@ class Block implements IBlock {
             $Type = strtolower($Split[0]);
             $Code = $Split[1];
 
-            if ($Type == NodeType::Packet) $Node = (new SyncPacket($this->Asymmetric->GetPbkUnique(), $Code, $PacketOrHead))->Process();
-            else $Node = (new SyncHead($this->Asymmetric->GetPbkUnique(), $Code, $PacketOrHead))->Process();
+
+            if ($Type == NodeType::Packet) $Node = (new SyncPacket($this->Asymmetric->GetPbkUnique(), $Code, $this->GetIP(), $PacketOrHead))->Process();
+            else {
+                $Node = new SyncHead($this->Asymmetric->GetPbkUnique(), $Code, $this->GetIP(), $PacketOrHead);
+                $Node = $Node->Process();
+            }
 
             if ($Node != null) $GenericNodes[$Key] = $Node;
         }

@@ -1,5 +1,6 @@
 <?php
 
+
 class SyncPacket extends GenericSync {
     /** @var SyncHead */
     private $Heads;
@@ -11,17 +12,19 @@ class SyncPacket extends GenericSync {
     public $Remove;
     public $Sync;
 
-    public function __construct($Pbk, $Code, $PacketArray) {
+    public function __construct($Pbk, $Code, $IP, $PacketArray) {
         $this->Add = NewArray($PacketArray['add'] ?? null);
         $this->Remove = NewArray($PacketArray['remove'] ?? null);
         $this->Sync = NewArray($PacketArray['sync'] ?? null);
         $this->Mode = in_array($PacketArray['mode'] ?? null, Array(PacketMode::NoChildUpdate, PacketMode::AddRemove, PacketMode::Sync)) ? $PacketArray['mode'] : PacketMode::NoChildUpdate;
         $this->Title = $PacketArray['title'] ?? null;
         $this->Options = $PacketArray['options'] ?? null;
-        parent::__construct($Pbk, $Code, $PacketArray['message'] ?? null);
+        parent::__construct($Pbk, $Code, NodeType::Packet, $IP, $PacketArray['manualpass'] ?? $PacketArray['passmanual'] ?? $PacketArray['password'],
+            $PacketArray['message'] ?? null
+        );
     }
 
-    public function Process() {
+    public function _Process() {
         if (!$this->IsOwner()) return null;
         $CodeEsc = EscapeCode($this->GetCode());
         $Values = array();

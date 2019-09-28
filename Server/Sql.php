@@ -8,7 +8,7 @@ class Sql {
     private static $Mysqli;
 
     public static function Connect() {
-        if (self::$Mysqli == null) self::$Mysqli = new mysqli(Cfg::SqlHost, Cfg::SqlUser, Cfg::SqlPass, null, Cfg::SqlPort);
+        if (self::$Mysqli == null) self::$Mysqli = new mysqli(SQL_HOST, SQL_USER, SQL_PASS, SQL_SCHEMA, SQL_PORT);
         return self::$Mysqli;
     }
 

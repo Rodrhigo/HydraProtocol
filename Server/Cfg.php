@@ -14,7 +14,8 @@ const SOCKET_SERVERPORT = 16223;
 const SQL_USER = "root";
 const SQL_PASS = "";
 const SQL_HOST = "127.0.0.1";
-const SQL_PORT = 3036;
+const SQL_PORT = 3306;
+const SQL_SCHEMA= null;
 
 /** @var string Code Characters */
 const HASHID_CHARACTERS = "abcdefghijklmnopgrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890-";

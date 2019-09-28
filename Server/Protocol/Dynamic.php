@@ -17,7 +17,6 @@ class Dynamic {
 
     public function __construct($SuggestedServerName, $DynamicHost, $DynamicSubdomain, $DynamicPath, $UpName, $OriginalName, $fSize, $AutoPass,
                                 $ManualPass, $fHash, $RefHash) {
-        $this->CreationTime = $CreationTime;
         $this->Host = $DynamicHost;
         $this->Subdomain = $DynamicSubdomain;
         $this->Path = $DynamicPath;
@@ -28,6 +27,10 @@ class Dynamic {
         $this->ManualPass = $ManualPass;
         $this->fHash = $fHash;
         $this->RefHash = $RefHash;
+    }
+
+    public function IsValid() {
+        return true;
     }
 
     public function GetHost() { return $this->Host; }
